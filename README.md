@@ -11,10 +11,8 @@ built and tested together with Claude.
 
 ---
 
-## How to play
+**[▶ Play the game](https://chimchol.github.io/SneakySnake/)**
 
-Open `sneaky-snake.html` in a web browser (Chrome, Edge, Firefox, Safari) while connected to the internet. 
-That's it, there is nothing to install.
 
 ### Controls
 
