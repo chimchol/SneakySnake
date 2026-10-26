@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sneaky Snake</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Nunito:wght@600;800&display=swap">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<canvas id="game" aria-label="Sneaky Snake game world"></canvas>
+<div class="hud">
+  <div>
+    <div class="logo">Sneaky Snake</div>
+    <div class="step">Pixie's Parkour</div>
+    <div class="clock" id="clock"><span id="clockIcon">☀️</span> <b id="clockText">Day 5:00</b></div>
+  </div>
+  <div>
+    <div class="stats">
+      <div class="chip coins" id="coinChip"><span>Coins</span><b id="coins">0</b></div>
+      <div class="chip" id="speedChip"><span>Speed</span><b id="speed">6</b></div>
+      <div class="chip" id="lengthChip"><span>Length</span><b id="length">12</b></div>
+    </div>
+    <div class="tools">
+      <button class="reset" id="voiceBtn" type="button" aria-pressed="true">🔊 Voice: on</button>
+      <button class="reset slow-btn" id="slowBtn" type="button" aria-pressed="false">🐢 Slow: off</button>
+      <button class="reset album-btn" id="albumBtn" type="button">📖 Album</button>
+      <button class="reset" id="skinBtn" type="button" hidden>🐍 Skin</button>
+      <button class="reset" id="leavePark" type="button" hidden>Leave parkour</button>
+      <button class="reset" id="reset" type="button">Reset game</button>
+    </div>
+  </div>
+</div>
+<div class="album" id="tele" hidden>
+  <div class="album-card" role="dialog" aria-labelledby="teleTitle">
+    <div class="album-head">
+      <h2 id="teleTitle">Teleport</h2>
+      <button class="reset" id="teleClose" type="button">Close</button>
+    </div>
+    <p class="album-zone">Pick a zone. Cross a pole once to unlock its zone.</p>
+    <div class="tele-list" id="teleList"></div>
+  </div>
+</div>
+<div class="album" id="pixieBox" hidden>
+  <div class="album-card" role="dialog" aria-labelledby="pixieTitle">
+    <div class="album-head">
+      <h2 id="pixieTitle">Pixie's Quests</h2>
+      <button class="reset" id="pixieClose" type="button">Close</button>
+    </div>
+    <p class="album-zone" id="pixieSays">Finish all 3 quests and I will open my log for you!</p>
+    <div class="quest-list" id="questList"></div>
+    <button class="hop" id="enterLog" type="button" hidden>Enter Pixie's log!</button>
+  </div>
+</div>
+<div class="album" id="shopBox" hidden>
+  <div class="album-card" role="dialog" aria-labelledby="shopTitle">
+    <div class="album-head">
+      <h2 id="shopTitle">Shop</h2>
+      <button class="reset" id="shopClose" type="button">Close</button>
+    </div>
+    <p class="album-zone" id="shopSays"></p>
+    <div class="quest-list" id="shopList"></div>
+  </div>
+</div>
+<div class="album" id="album" hidden>
+  <div class="album-card" role="dialog" aria-labelledby="albumTitle">
+    <div class="album-head">
+      <h2 id="albumTitle">Egg Album</h2>
+      <button class="reset" id="albumClose" type="button">Close</button>
+    </div>
+    <div class="album-grid" id="albumGrid"></div>
+    <h3>Mutations</h3>
+    <div class="mut-row">
+      <span><i style="background:#c9ced8"></i>Silver ×1.5 · 1 in 25</span>
+      <span><i style="background:#f2bd2c"></i>Gold ×2 · 1 in 50</span>
+      <span><i style="background:linear-gradient(#ff4b4b,#ffe14a,#5bd65b,#4aa8ff,#9a5bff)"></i>Rainbow ×3 · 1 in 75</span>
+      <span><i style="background:#a54be0"></i>Enchanted ×4 · 1 in 100</span>
+    </div>
+  </div>
+</div>
+<div class="park-ui" id="parkUi" hidden>
+  <button class="pk-btn" id="pkLeft" type="button" aria-label="Move left">◀</button>
+  <button class="pk-btn jump" id="pkJump" type="button">JUMP</button>
+  <button class="pk-btn" id="pkRight" type="button" aria-label="Move right">▶</button>
+</div>
+<div class="bottom">
+  <div class="machine-btns">
+    <button class="hop up" id="upgrade" type="button" hidden>Upgrade</button>
+    <button class="hop" id="hop" type="button" hidden>Hop off</button>
+  </div>
+  <div class="hint" id="hint">Arrow keys or move the mouse to slither</div>
+</div>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="js/core/debug.js"></script>
+<script src="js/data/world.js"></script>
+<script src="js/data/eggs.js"></script>
+<script src="js/data/pet-lines.js"></script>
+<script src="js/data/machines.js"></script>
+<script src="js/data/parkour.js"></script>
+<script src="js/data/settings.js"></script>
+<script src="js/core/format.js"></script>
+<script src="js/core/voice.js"></script>
+<script src="js/core/scene.js"></script>
+<script src="js/world/spawn.js"></script>
+<script src="js/world/zone01-forest.js"></script>
+<script src="js/world/zone02-lake.js"></script>
+<script src="js/world/zone03-desert.js"></script>
+<script src="js/world/zone04-jungle.js"></script>
+<script src="js/world/zone05-volcano.js"></script>
+<script src="js/world/zone06-ice.js"></script>
+<script src="js/world/zone07-ocean.js"></script>
+<script src="js/world/zone08-prehistoric.js"></script>
+<script src="js/world/zone13-mystical.js"></script>
+<script src="js/world/zone12-angels-demons.js"></script>
+<script src="js/world/zone11-titan.js"></script>
+<script src="js/world/zone10-cherry.js"></script>
+<script src="js/world/zone09-cosmic.js"></script>
+<script src="js/entities/bosses.js"></script>
+<script src="js/entities/egg-textures.js"></script>
+<script src="js/entities/eggs.js"></script>
+<script src="js/entities/pets.js"></script>
+<script src="js/entities/pets-heaven-hell.js"></script>
+<script src="js/entities/nests.js"></script>
+<script src="js/world/pen.js"></script>
+<script src="js/machines/treadmill.js"></script>
+<script src="js/machines/wood.js"></script>
+<script src="js/machines/gains.js"></script>
+<script src="js/machines/looks.js"></script>
+<script src="js/systems/progress.js"></script>
+<script src="js/systems/snake.js"></script>
+<script src="js/ui/hud.js"></script>
+<script src="js/systems/input.js"></script>
+<script src="js/systems/upgrades.js"></script>
+<script src="js/ui/home-arrow.js"></script>
+<script src="js/systems/movement.js"></script>
+<script src="js/systems/pole.js"></script>
+<script src="js/systems/stealing.js"></script>
+<script src="js/systems/money.js"></script>
+<script src="js/ui/album.js"></script>
+<script src="js/systems/angels-demons.js"></script>
+<script src="js/systems/night.js"></script>
+<script src="js/systems/parkour.js"></script>
+<script src="js/systems/skin.js"></script>
+<script src="js/systems/pixie.js"></script>
+<script src="js/world/shops.js"></script>
+<script src="js/world/teleport.js"></script>
+<script src="js/ui/reset.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
