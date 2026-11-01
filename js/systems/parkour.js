@@ -71,7 +71,7 @@ function startParkour() {
   if (snake.carry) { hintEl.textContent = 'Put your egg in the pen first!'; return; }
   pixieBox.hidden = true;
   snake.state = 'park'; parkUi.hidden = false; leaveBtn.hidden = false; hopBtn.hidden = true; upBtn.hidden = true;
-  parkRestart('🧚 Welcome to my parkour! Arrow keys or mouse to move, SPACE to jump.');
+  parkRestart(isTouch ? '🧚 Welcome to my parkour! Drag to move, tap JUMP to jump.' : '🧚 Welcome to my parkour! Arrow keys or mouse to move, SPACE to jump.');
   camPos.set(snake.x, 14, snake.z + 16);
 }
 function leaveParkour(msg) {
@@ -104,6 +104,8 @@ function updatePark(dt) {
     } else if (pointerTarget) {
       const dx = pointerTarget.x - snake.x, dz = pointerTarget.z - snake.z;
       if (Math.hypot(dx, dz) > 1.2) want = Math.atan2(dx, dz);
+    } else if (mode === 'stick') {
+      want = stickHeading;
     }
     if (want !== null) {
       snake.heading += Math.max(-7 * dt, Math.min(7 * dt, wrap(want - snake.heading)));

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Sneaky Snake</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Nunito:wght@600;800&display=swap">
@@ -22,7 +22,8 @@
       <div class="chip" id="speedChip"><span>Speed</span><b id="speed">6</b></div>
       <div class="chip" id="lengthChip"><span>Length</span><b id="length">12</b></div>
     </div>
-    <div class="tools">
+    <div class="tools" id="tools">
+      <button class="reset menu-btn" id="menuBtn" type="button" aria-expanded="false" aria-controls="tools">☰ Menu</button>
       <button class="reset" id="voiceBtn" type="button" aria-pressed="true">🔊 Voice: on</button>
       <button class="reset slow-btn" id="slowBtn" type="button" aria-pressed="false">🐢 Slow: off</button>
       <button class="reset album-btn" id="albumBtn" type="button">📖 Album</button>
@@ -79,6 +80,7 @@
     </div>
   </div>
 </div>
+<div class="stick" id="stick" hidden><div class="stick-knob" id="stickKnob"></div></div>
 <div class="park-ui" id="parkUi" hidden>
   <button class="pk-btn" id="pkLeft" type="button" aria-label="Move left">◀</button>
   <button class="pk-btn jump" id="pkJump" type="button">JUMP</button>

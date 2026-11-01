@@ -1,7 +1,9 @@
 // Camera, resizing, and the main game loop. Loaded last.
 function updateCamera(dt) {
   // Pull back a little as the snake gets longer
-  const zoom = 1 + Math.min(1.2, Math.sqrt(Math.max(0, snake.segments - 12)) * 0.06);
+  // and on tall (portrait) screens, so the sides of the world are not cut off
+  const fit = Math.min(1.5, Math.sqrt(Math.max(1, 1 / camera.aspect)));
+  const zoom = (1 + Math.min(1.2, Math.sqrt(Math.max(0, snake.segments - 12)) * 0.06)) * fit;
   let fx = snake.x, fz = snake.z;
   if (snake.state === 'wood') { fx = WOOD.x; fz = WOOD.z; }
   const sy = snake.state === 'park' ? (snake.y || 0) : 0;

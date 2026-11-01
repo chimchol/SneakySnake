@@ -10,8 +10,9 @@
   --body: "Nunito", "Segoe UI", system-ui, sans-serif;
   color-scheme: light;
 }
-html, body { height: 100%; }
-body { background: var(--sky); color: var(--ink); font-family: var(--body); overflow: hidden; }
+html, body { height: 100%; overscroll-behavior: none; }
+body { background: var(--sky); color: var(--ink); font-family: var(--body); overflow: hidden; -webkit-tap-highlight-color: transparent; -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; }
+button { touch-action: manipulation; }
 [hidden] { display: none !important; }
 #game { position: fixed; inset: 0; display: block; width: 100%; height: 100%; touch-action: none; }
 .hud {
@@ -43,7 +44,9 @@ body { background: var(--sky); color: var(--ink); font-family: var(--body); over
   bottom: calc(14px + env(safe-area-inset-bottom, 0px));
   display: flex; flex-direction: column; align-items: center; gap: 10px;
   max-width: calc(100% - 32px);
+  pointer-events: none; /* let touches through to the game; only the buttons catch them */
 }
+.bottom .hop { pointer-events: auto; }
 .hint {
   pointer-events: none;
   background: var(--chip); border: 3px solid var(--chip-edge); border-radius: 999px;
@@ -97,6 +100,16 @@ body { background: var(--sky); color: var(--ink); font-family: var(--body); over
 .mut-row i { display: inline-block; width: 12px; height: 16px; border-radius: 50%; border: 1.5px solid var(--ink); margin-right: 5px; vertical-align: -3px; }
 .wall-note { color: #fff; }
 #enterLog { margin-top: 14px; width: 100%; }
+/* Touch joystick: appears where the finger goes down */
+.stick { position: fixed; width: 110px; height: 110px; margin: -55px 0 0 -55px; border-radius: 50%; background: rgba(255, 251, 233, 0.35); border: 3px solid rgba(29, 58, 31, 0.5); pointer-events: none; z-index: 5; }
+.stick-knob { position: absolute; left: 50%; top: 50%; width: 48px; height: 48px; margin: -24px 0 0 -24px; border-radius: 50%; background: var(--chip); border: 3px solid var(--ink); box-shadow: 0 3px 0 var(--ink); }
+.menu-btn { display: none; }
+/* Touch screens: finger-sized buttons, and the tools fold into the menu (Leave parkour stays out) */
+@media (pointer: coarse) {
+  .reset { font-size: 14px; padding: 8px 14px; min-height: 40px; border-radius: 10px; }
+  .menu-btn { display: block; }
+  .tools:not(.open) > .reset:not(.menu-btn):not(#leavePark) { display: none; }
+}
 .park-ui { position: fixed; right: calc(14px + env(safe-area-inset-right, 0px)); bottom: calc(70px + env(safe-area-inset-bottom, 0px)); display: flex; gap: 8px; }
 .pk-btn { font-family: var(--display); font-size: 22px; min-width: 56px; height: 56px; border-radius: 16px; border: 3px solid var(--ink); background: var(--chip); color: var(--ink); box-shadow: 0 4px 0 var(--ink); cursor: pointer; touch-action: manipulation; }
 .pk-btn.jump { background: #b07aff; color: #fff; min-width: 96px; }
