@@ -97,6 +97,8 @@ function update(dt) {
     } else if (pointerTarget) {
       const dx = pointerTarget.x - snake.x, dz = pointerTarget.z - snake.z;
       if (Math.hypot(dx, dz) > 1.2) wantHeading = Math.atan2(dx, dz);
+    } else if (mode === 'stick') {
+      wantHeading = stickHeading;
     }
     const moving = wantHeading !== null;
     if (moving) {

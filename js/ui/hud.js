@@ -14,3 +14,13 @@ function pop(text, kind, x, y, z) {
   document.body.appendChild(el);
   setTimeout(() => el.remove(), 950);
 }
+
+// On touch screens the tool buttons fold into a menu, so they do not cover the game
+const toolsEl = document.getElementById('tools'), menuBtn = document.getElementById('menuBtn');
+function setMenu(open) {
+  toolsEl.classList.toggle('open', open);
+  menuBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+  menuBtn.textContent = open ? '✕ Close' : '☰ Menu';
+}
+menuBtn.addEventListener('click', () => setMenu(!toolsEl.classList.contains('open')));
+canvas.addEventListener('pointerdown', () => setMenu(false));
